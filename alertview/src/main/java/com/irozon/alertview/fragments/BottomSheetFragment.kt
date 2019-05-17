@@ -26,6 +26,10 @@ import java.util.*
 @SuppressLint("ValidFragment")
 class BottomSheetFragment(private val title: String, private val message: String, private val actions: ArrayList<AlertAction>, private val style: AlertStyle, private val theme: AlertTheme,private val fontPath:String? = null,private val textSize:Float = 14f) : BottomSheetDialogFragment() {
 
+
+    private lateinit var tvCancel: TextView
+    private var cancelButtonText = "Cancel"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
@@ -50,23 +54,29 @@ class BottomSheetFragment(private val title: String, private val message: String
     private fun initView(view: View?) {
         view!!.tvTitle.text = title
         view.tvMessage.text = message
+        tvCancel = view.findViewById(R.id.tvCancel)
+        tvCancel.text = cancelButtonText
         setFont(view.tvTitle)
         setFont(view.tvMessage)
-        setFont(view.tvCancel)
+        setFont(tvCancel)
 
         // In case of title or message is empty
-        if (title.isEmpty()) view.tvTitle.visibility = View.GONE
+        if (title.isEmpty()) tvCancel.visibility = View.GONE
         if (message.isEmpty()) view.tvMessage.visibility = View.GONE
 
         // Change view according to selected Style
         if (style == AlertStyle.BOTTOM_SHEET)
-            view.tvCancel.visibility = View.GONE
+            tvCancel.visibility = View.GONE
         else if (style == AlertStyle.IOS)
-            view.tvCancel.visibility = View.VISIBLE
-        view.tvCancel.setOnClickListener({ dismiss() })
+            tvCancel.visibility = View.VISIBLE
+        tvCancel.setOnClickListener({ dismiss() })
 
         // Inflate action views
         inflateActionsView(view.actionsLayout, actions)
+    }
+
+    fun setCancelButtonText(text: String){
+        this.cancelButtonText = text
     }
 
     private fun setFont(textView: TextView) {

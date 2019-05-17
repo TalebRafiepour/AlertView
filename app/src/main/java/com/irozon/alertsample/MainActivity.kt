@@ -17,8 +17,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         btShow.setOnClickListener({
-            val alert = AlertView("", "وات دو یو دو ویت دیز فایل", AlertStyle.DIALOG)
+            val alert = AlertView("", "وات دو یو دو ویت دیز فایل", AlertStyle.IOS)
             alert.setFontPath("fonts/IranSans.ttf")
+            alert.setCancelButtonText("لغو")
             alert.addAction(AlertAction("Delete it", AlertActionStyle.NEGATIVE, { action ->
                 Toast.makeText(this, action.title, Toast.LENGTH_SHORT).show()
             }))
