@@ -5,7 +5,7 @@ A library to create simple alerts easily with some customization. Written in Kot
 ## Download
 Grab via Gradle:
 ```java
-implementation 'com.github.TalebRafiepour:AlertView:1.0.0'
+implementation 'com.github.TalebRafiepour:AlertView:1.0.1'
 implementation 'com.android.support:design:27.1.0'
 ```
 ## Usage
@@ -25,6 +25,10 @@ alert.show(this)
 Using Lambda
 ```java
 AlertView alert = new AlertView("Title", "Message", AlertStyle.BOTTOM_SHEET);
+alert.setFontPath("fonts/IranSans.ttf")
+alert.setCancelButtonText("لغو")
+alert.setTextSize(14f)
+
 alert.addAction(new AlertAction("Action 1", AlertActionStyle.DEFAULT, action -> {
 // Action 1 callback
 }));
