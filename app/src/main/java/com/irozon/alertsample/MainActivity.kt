@@ -1,9 +1,12 @@
 package com.irozon.alertsample
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-import com.irozon.alertview.*
+import com.irozon.alertview.AlertActionStyle
+import com.irozon.alertview.AlertStyle
+import com.irozon.alertview.AlertTheme
+import com.irozon.alertview.AlertView
 import com.irozon.alertview.objects.AlertAction
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -14,7 +17,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         btShow.setOnClickListener({
-            val alert = AlertView("", "What do you want to do with the file?", AlertStyle.DIALOG)
+            val alert = AlertView("", "وات دو یو دو ویت دیز فایل", AlertStyle.DIALOG)
+            alert.setFontPath("fonts/IranSans.ttf")
             alert.addAction(AlertAction("Delete it", AlertActionStyle.NEGATIVE, { action ->
                 Toast.makeText(this, action.title, Toast.LENGTH_SHORT).show()
             }))

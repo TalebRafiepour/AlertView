@@ -1,6 +1,7 @@
 package com.irozon.alertview.fragments
 
 import android.annotation.SuppressLint
+import android.graphics.Typeface
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialogFragment
 import android.support.v4.content.ContextCompat
@@ -8,19 +9,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import com.irozon.alertview.*
+import android.widget.TextView
+import com.irozon.alertview.AlertActionStyle
+import com.irozon.alertview.AlertStyle
+import com.irozon.alertview.AlertTheme
+import com.irozon.alertview.R
 import com.irozon.alertview.objects.AlertAction
 import kotlinx.android.synthetic.main.action_layout_light.view.*
 import kotlinx.android.synthetic.main.alert_layout_light.view.*
-
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by hammad.akram on 3/14/18.
  */
 
 @SuppressLint("ValidFragment")
-class BottomSheetFragment(private val title: String, private val message: String, private val actions: ArrayList<AlertAction>, private val style: AlertStyle, private val theme: AlertTheme) : BottomSheetDialogFragment() {
+class BottomSheetFragment(private val title: String, private val message: String, private val actions: ArrayList<AlertAction>, private val style: AlertStyle, private val theme: AlertTheme,private val fontPath:String? = null,private val textSize:Float = 14f) : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +50,9 @@ class BottomSheetFragment(private val title: String, private val message: String
     private fun initView(view: View?) {
         view!!.tvTitle.text = title
         view.tvMessage.text = message
+        setFont(view.tvTitle)
+        setFont(view.tvMessage)
+        setFont(view.tvCancel)
 
         // In case of title or message is empty
         if (title.isEmpty()) view.tvTitle.visibility = View.GONE
@@ -62,6 +69,17 @@ class BottomSheetFragment(private val title: String, private val message: String
         inflateActionsView(view.actionsLayout, actions)
     }
 
+    private fun setFont(textView: TextView) {
+        textView.textSize = textSize
+        if (fontPath !== null) {
+            try {
+                textView.typeface = Typeface.createFromAsset(context?.resources?.assets, fontPath)
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     /**
      * Inflate action views
      */
@@ -76,6 +94,7 @@ class BottomSheetFragment(private val title: String, private val message: String
                 view = LayoutInflater.from(context).inflate(R.layout.action_layout_dark, null)
 
             view!!.tvAction.text = action.title
+            setFont(view.tvAction)
 
             // Click listener for action.
             view.tvAction.setOnClickListener({

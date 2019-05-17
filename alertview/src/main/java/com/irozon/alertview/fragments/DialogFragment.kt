@@ -1,6 +1,7 @@
 package com.irozon.alertview.fragments
 
 import android.annotation.SuppressLint
+import android.graphics.Typeface
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialogFragment
 import android.support.v4.app.DialogFragment
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.irozon.alertview.AlertActionStyle
 import com.irozon.alertview.AlertTheme
 import com.irozon.alertview.R
@@ -21,7 +23,7 @@ import java.util.*
  * Created by hammad.akram on 3/14/18.
  */
 @SuppressLint("ValidFragment")
-class DialogFragment(private val title: String, private val message: String, private val actions: ArrayList<AlertAction>, private val theme: AlertTheme) : DialogFragment() {
+class DialogFragment(private val title: String, private val message: String, private val actions: ArrayList<AlertAction>, private val theme: AlertTheme,private val fontPath:String? = null,private val textSize:Float = 14f) : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +49,9 @@ class DialogFragment(private val title: String, private val message: String, pri
     private fun initView(view: View?) {
         view!!.tvTitle.text = title
         view.tvMessage.text = message
+        setFont(view.tvTitle)
+        setFont(view.tvMessage)
+        setFont(view.tvCancel)
 
         // In case of title or message is empty
         if (title.isEmpty()) view.tvTitle.visibility = View.GONE
@@ -56,6 +61,17 @@ class DialogFragment(private val title: String, private val message: String, pri
 
         // Inflate action views
         inflateActionsView(view.actionsLayout, actions)
+    }
+
+    private fun setFont(textView: TextView) {
+        textView.textSize = textSize
+        if (fontPath !== null) {
+            try {
+                textView.typeface = Typeface.createFromAsset(context?.resources?.assets, fontPath)
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     /**
@@ -72,6 +88,7 @@ class DialogFragment(private val title: String, private val message: String, pri
                 view = LayoutInflater.from(context).inflate(R.layout.action_layout_dark, null)
 
             view!!.tvAction.text = action.title
+            setFont(view.tvAction)
 
             // Click listener for action.
             view.tvAction.setOnClickListener({
