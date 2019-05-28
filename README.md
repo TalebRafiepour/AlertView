@@ -5,7 +5,7 @@ A library to create simple alerts easily with some customization. Written in Kot
 ## Download
 Grab via Gradle:
 ```java
-implementation 'com.github.TalebRafiepour:AlertView:1.0.1'
+implementation 'com.github.TalebRafiepour:AlertView:1.0.2'
 implementation 'com.android.support:design:27.1.0'
 ```
 ## Usage
