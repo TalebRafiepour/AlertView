@@ -15,6 +15,7 @@ class AlertView(private var title: String, private var message: String, private 
     private var fontPath:String? = null
     private var textSize:Float = 14f
     private var cancelText:String? = null
+    var isCancelable = true
 
     /**
      * Add Actions to AlertView
@@ -32,16 +33,19 @@ class AlertView(private var title: String, private var message: String, private 
         when (style) {
             AlertStyle.BOTTOM_SHEET -> {
                 val bottomSheet = BottomSheetFragment(title, message, actions, style, theme,fontPath,textSize)
+                bottomSheet.isCancelable = this.isCancelable
                 if (cancelText != null){bottomSheet.setCancelButtonText(cancelText!!)}
                 bottomSheet.show(activity.supportFragmentManager, bottomSheet.tag)
             }
             AlertStyle.IOS -> {
                 val bottomSheet = BottomSheetFragment(title, message, actions, style, theme,fontPath,textSize)
+                bottomSheet.isCancelable = this.isCancelable
                 if (cancelText != null){bottomSheet.setCancelButtonText(cancelText!!)}
                 bottomSheet.show(activity.supportFragmentManager, bottomSheet.tag)
             }
             AlertStyle.DIALOG -> {
                 val bottomSheet = DialogFragment(title, message, actions, theme,fontPath,textSize)
+                bottomSheet.isCancelable = this.isCancelable
                 bottomSheet.show(activity.supportFragmentManager, bottomSheet.tag)
             }
         }

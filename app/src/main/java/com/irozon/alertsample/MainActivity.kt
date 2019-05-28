@@ -16,26 +16,28 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btShow.setOnClickListener({
+        btShow.setOnClickListener {
             val alert = AlertView("", "وات دو یو دو ویت دیز فایل", AlertStyle.IOS)
             alert.setFontPath("fonts/IranSans.ttf")
             alert.setCancelButtonText("لغو")
-            alert.addAction(AlertAction("Delete it", AlertActionStyle.NEGATIVE, { action ->
+            alert.isCancelable = true
+            alert.setTextSize(14f)
+            alert.addAction(AlertAction("Delete it", AlertActionStyle.NEGATIVE) { action ->
                 Toast.makeText(this, action.title, Toast.LENGTH_SHORT).show()
-            }))
-            alert.addAction(AlertAction("Copy", AlertActionStyle.DEFAULT, { action ->
+            })
+            alert.addAction(AlertAction("Copy", AlertActionStyle.DEFAULT) { action ->
                 Toast.makeText(this, action.title, Toast.LENGTH_SHORT).show()
-            }))
-            alert.addAction(AlertAction("Move", AlertActionStyle.DEFAULT, { action ->
+            })
+            alert.addAction(AlertAction("Move", AlertActionStyle.DEFAULT) { action ->
                 Toast.makeText(this, action.title, Toast.LENGTH_SHORT).show()
-            }))
-            alert.addAction(AlertAction("Duplicate", AlertActionStyle.DEFAULT, { action ->
+            })
+            alert.addAction(AlertAction("Duplicate", AlertActionStyle.DEFAULT) { action ->
                 Toast.makeText(this, action.title, Toast.LENGTH_SHORT).show()
-            }))
+            })
 
 
             alert.setTheme(AlertTheme.DARK)
             alert.show(this)
-        })
+        }
     }
 }
